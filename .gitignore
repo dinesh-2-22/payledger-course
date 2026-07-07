@@ -1,0 +1,28 @@
+# --- Generated mock data (re-create with module-02/generate_data.py) ---
+module-02-mock-data-and-corpus/data/*.csv
+
+# --- Python ---
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+env/
+.python-version
+
+# --- dbt ---
+target/
+dbt_packages/
+logs/
+.user.yml
+
+# --- Secrets / local config ---
+.env
+*.local
+profiles.yml
+**/secrets.*
+
+# --- OS / editor noise ---
+.DS_Store
+.idea/
+.vscode/
+*.swp

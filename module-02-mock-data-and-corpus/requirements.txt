@@ -1,0 +1,3 @@
+# Module 2 - synthetic data generation
+# Pin Faker so the deterministic seed produces identical data for every learner.
+Faker==30.8.2
