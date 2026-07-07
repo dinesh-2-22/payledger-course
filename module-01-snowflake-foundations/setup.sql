@@ -55,7 +55,8 @@ CREATE SCHEMA IF NOT EXISTS PAYLEDGER.PAYLEDGER_DW
 CREATE ROLE IF NOT EXISTS PAYLEDGER_DEV
     COMMENT = 'Course dev role - owns all PayLedger objects';
 
-GRANT ROLE PAYLEDGER_DEV TO USER IDENTIFIER(CURRENT_USER());
+SET my_user = CURRENT_USER();
+GRANT ROLE PAYLEDGER_DEV TO USER IDENTIFIER($my_user);
 
 -- ---------------------------------------------------------------------------
 -- 4. Grants

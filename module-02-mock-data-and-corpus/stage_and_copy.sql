@@ -18,8 +18,10 @@
    NOTE on uploading files:
      `PUT` is a client-side command. It works in SnowSQL and the VS Code
      Snowflake extension, but NOT in the Snowsight SQL worksheet. If you are in
-     Snowsight, use  Data > Databases > ... > Load Data  to upload the CSVs into
-     the @PAYLEDGER_RAW_STAGE, then skip straight to the COPY INTO statements.
+     Snowsight, use  Ingestion > Add Data > Load files into a Stage > Snowflake Stage
+     to upload the CSVs into PAYLEDGER.PAYLEDGER_RAW.PAYLEDGER_RAW_STAGE, confirm with
+     LIST @PAYLEDGER_RAW_STAGE;, then skip straight to the COPY INTO statements below
+     (drop the .gz suffix - files uploaded this way aren't compressed).
    ========================================================================== */
 
 USE ROLE PAYLEDGER_DEV;            -- created in Module 1
@@ -43,8 +45,13 @@ CREATE OR REPLACE STAGE PAYLEDGER_RAW_STAGE
     COMMENT = 'Landing stage for Module 2 raw CSVs';
 
 -- ---------------------------------------------------------------------------
--- 2. Upload local files to the stage  (SnowSQL / VS Code only -- see note above)
---    Adjust the path to wherever you ran generate_data.py.
+-- 2. Upload local files to the stage
+--    SnowSQL / VS Code: uncomment and run the PUTs below (adjust the path to
+--    wherever you ran generate_data.py).
+--    Snowsight: PUT doesn't run in a worksheet, and the stage object page
+--    doesn't always expose an upload button. Instead use the left nav:
+--    Ingestion > Add Data > Load files into a Stage > Snowflake Stage,
+--    pick PAYLEDGER.PAYLEDGER_RAW.PAYLEDGER_RAW_STAGE, and upload all 5 CSVs.
 -- ---------------------------------------------------------------------------
 -- PUT file://./data/raw_merchant_master.csv  @PAYLEDGER_RAW_STAGE AUTO_COMPRESS=TRUE OVERWRITE=TRUE;
 -- PUT file://./data/raw_card_master.csv       @PAYLEDGER_RAW_STAGE AUTO_COMPRESS=TRUE OVERWRITE=TRUE;
@@ -128,12 +135,12 @@ CREATE OR REPLACE TABLE dispute_memos (
 -- 4. Load each file. ON_ERROR=ABORT_STATEMENT so a bad row fails loudly
 --    (a deliberate teaching choice -- in Module 5 dbt tests replace this guardrail).
 -- ---------------------------------------------------------------------------
-COPY INTO raw_merchant_master FROM @PAYLEDGER_RAW_STAGE/raw_merchant_master.csv.gz ON_ERROR = ABORT_STATEMENT;
-COPY INTO raw_card_master     FROM @PAYLEDGER_RAW_STAGE/raw_card_master.csv.gz     ON_ERROR = ABORT_STATEMENT;
-COPY INTO raw_transactions    FROM @PAYLEDGER_RAW_STAGE/raw_transactions.csv.gz    ON_ERROR = ABORT_STATEMENT;
-COPY INTO raw_gateway_log     FROM @PAYLEDGER_RAW_STAGE/raw_gateway_log.csv.gz     ON_ERROR = ABORT_STATEMENT;
-COPY INTO dispute_memos       FROM @PAYLEDGER_RAW_STAGE/dispute_memos.csv.gz       ON_ERROR = ABORT_STATEMENT;
--- (If you uploaded via Snowsight, drop the ".gz" suffix -- those files are not auto-compressed.)
+COPY INTO raw_merchant_master FROM @PAYLEDGER_RAW_STAGE/raw_merchant_master.csv ON_ERROR = ABORT_STATEMENT;
+COPY INTO raw_card_master     FROM @PAYLEDGER_RAW_STAGE/raw_card_master.csv     ON_ERROR = ABORT_STATEMENT;
+COPY INTO raw_transactions    FROM @PAYLEDGER_RAW_STAGE/raw_transactions.csv    ON_ERROR = ABORT_STATEMENT;
+COPY INTO raw_gateway_log     FROM @PAYLEDGER_RAW_STAGE/raw_gateway_log.csv     ON_ERROR = ABORT_STATEMENT;
+COPY INTO dispute_memos       FROM @PAYLEDGER_RAW_STAGE/dispute_memos.csv       ON_ERROR = ABORT_STATEMENT;
+-- (If you uploaded via PUT/SnowSQL instead, add back the ".gz" suffix -- those files are auto-compressed.)
 
 -- ---------------------------------------------------------------------------
 -- 5. Validate -- expected approx counts at default seed/rows

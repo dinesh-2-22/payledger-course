@@ -80,9 +80,12 @@ Open `stage_and_copy.sql` and run it top to bottom.
 
 - **SnowSQL / VS Code:** uncomment the `PUT` statements (step 2 of the script) to
   upload your local CSVs to the internal stage, then run the `COPY INTO`s.
-- **Snowsight:** the `PUT` commands won't run in a worksheet. Instead use
-  *Data → Databases → PAYLEDGER → PAYLEDGER_RAW → Load Data* to upload each CSV into
-  `@PAYLEDGER_RAW_STAGE`, then run the `COPY INTO` statements (drop the `.gz` suffix).
+- **Snowsight:** the `PUT` commands won't run in a worksheet, and the stage's own object
+  page doesn't expose an upload button in every Snowsight version. The reliable path:
+  left nav → **Ingestion → Add Data** → **Load files into a Stage** → **Snowflake Stage**,
+  pick `PAYLEDGER.PAYLEDGER_RAW.PAYLEDGER_RAW_STAGE` as the destination, and upload each of
+  the 5 CSVs. Confirm with `LIST @PAYLEDGER_RAW_STAGE;` (should return 5 rows), then run the
+  `COPY INTO` statements (drop the `.gz` suffix — files uploaded this way aren't compressed).
 
 ---
 
