@@ -8,7 +8,7 @@ fact + dimensions → AI layer.
 > the raw tables are headed.
 
 **Legend:** `Δ` = incremental load anchored on `MAX(_loaded_at)` · 🟢 built now (Module 2) ·
-🟡 planned (built in the noted module) · `M3/M8/M9` = module that builds it · `FK` = foreign-key join.
+🟡 planned (built in the noted module) · `M3/M9/M10` = module that builds it · `FK` = foreign-key join.
 
 ---
 
@@ -43,7 +43,7 @@ flowchart LR
         dcur["dim_currency"]:::planned
     end
 
-    subgraph AI["AI Layer (M8–M9)"]
+    subgraph AI["AI Layer (M9–M10)"]
         analyst["Cortex Analyst<br/>semantic_model.yaml"]:::ai
         search["Cortex Search<br/>memo_text index"]:::ai
         agent{{"Snowflake Intelligence agent"}}:::ai
@@ -120,10 +120,10 @@ CONFORMED DIMENSIONS (built straight from raw masters; fact joins on natural key
    raw_card_master     ─► dim_card      ├──◄ FK ──  fact_payment_ledger
    (currency codes)    ─► dim_currency ─┘
 
-AI LAYER (M8–M9)
-   fact_payment_ledger + dims ──► Cortex Analyst (M8) ──┐
-                                  semantic_model.yaml    ├─► Snowflake Intelligence agent (M9)
-   dispute_memos.memo_text ─────► Cortex Search (M9) ───┘    NL → metrics (Analyst) + reasons (Search)
+AI LAYER (M9–M10)
+   fact_payment_ledger + dims ──► Cortex Analyst (M9) ──┐
+                                  semantic_model.yaml    ├─► Snowflake Intelligence agent (M10)
+   dispute_memos.memo_text ─────► Cortex Search (M10) ───┘    NL → metrics (Analyst) + reasons (Search)
 ```
 
 ---

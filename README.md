@@ -50,9 +50,10 @@ dispute_memos ········(free text)···················�
 | 5 | [dbt migration — day 1](module-05-dbt-day1/) | sources, staging models, tests, data quality | ⬜ planned |
 | 6 | [dbt migration — day 2](module-06-dbt-day2/) | intermediate, marts, `ref()`, docs/lineage | ⬜ planned |
 | 7 | [dbt slim CI](module-07-dbt-slim-ci/) | `state:modified+`, deferred refs, PR builds | ⬜ planned |
-| 8 | [Cortex Analyst](module-08-cortex-analyst/) | semantic YAML, natural-language → SQL | ⬜ planned |
-| 9 | [Snowflake Intelligence agent](module-09-intelligence-agent/) | Cortex Search + agent over Analyst + Search | ⬜ planned |
-| 10 | [Capstone: ship `fact_chargebacks`](module-10-capstone/) | integrate every skill end-to-end | ⬜ planned |
+| 8 | [Cortex AISQL](module-08-cortex-aisql/) | | ⬜ planned |
+| 9 | [Cortex Analyst](module-09-cortex-analyst/) | semantic YAML, natural-language → SQL | ⬜ planned |
+| 10 | [Snowflake Intelligence agent](module-10-intelligence-agent/) | Cortex Search + agent over Analyst + Search | ⬜ planned |
+| 11 | [Capstone: ship `fact_chargebacks`](module-11-capstone/) | integrate every skill end-to-end | ⬜ planned |
 
 > `solutions/` (a branch, eventually) holds reference implementations you can diff against.
 

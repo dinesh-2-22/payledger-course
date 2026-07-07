@@ -14,10 +14,10 @@
 | `raw_card_master.csv` | ~800 | `raw_card_master` | dim_card |
 | `raw_transactions.csv` | **10,000** | `raw_transactions` | the whole pipeline |
 | `raw_gateway_log.csv` | ~10,000 | `raw_gateway_log` | settlements & fees |
-| `dispute_memos.csv` | ~200 | `dispute_memos` | **Cortex Search (Module 9)** |
+| `dispute_memos.csv` | ~200 | `dispute_memos` | **Cortex Search (Module 10)** |
 
 The dispute memos are free text on purpose. We generate them *now*, alongside the
-structured data, so that when Cortex Search shows up in Module 9 it has a real,
+structured data, so that when Cortex Search shows up in Module 10 it has a real,
 internally-consistent corpus to index — not a contrived afterthought.
 
 ### How the data hangs together
