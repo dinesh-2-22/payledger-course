@@ -82,9 +82,11 @@ in Module 6 is where you'd revisit that trade-off at scale.)
 ### 4. Orchestrate it
 
 Run `orchestration/run_pipeline.sql` to wire all six procedures into a Snowflake Task
-DAG (two roots on a nightly `CRON`, fanning out to intermediate, fanning back in to the
-fact table). It includes commented-out `EXECUTE TASK` calls to test the DAG on demand
-instead of waiting for the schedule, plus a `TASK_HISTORY()` query to watch runs.
+DAG: a single root (`task_pipeline_start`) on a nightly `CRON` — Snowflake only allows
+one scheduled root per connected graph — fanning out to the two staging loads in
+parallel, then intermediate, then fanning back in to the fact table. It includes a
+commented-out `EXECUTE TASK task_pipeline_start` to test the DAG on demand instead of
+waiting for the schedule, plus a `TASK_HISTORY()` query to watch runs.
 
 > **Cost note:** these tasks fire nightly whether or not `generate_data.py` produced new
 > data. Suspend the tree (commands at the bottom of the script) once you're done
