@@ -60,7 +60,7 @@ BEGIN
         updated_at     = CURRENT_TIMESTAMP()
     WHERE source_table = 'raw_transactions';
 
-    RETURN 'stg_transactions: merged ' || rows_merged || ' row(s), watermark was ' || :wm;
+    RETURN 'stg_transactions: merged ' || rows_merged || ' row(s), watermark was ' || wm;
 END;
 $$;
 

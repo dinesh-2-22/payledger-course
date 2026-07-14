@@ -58,7 +58,7 @@ BEGIN
         updated_at     = CURRENT_TIMESTAMP()
     WHERE source_table = 'raw_gateway_log';
 
-    RETURN 'stg_gateway_log: merged ' || rows_merged || ' row(s), watermark was ' || :wm;
+    RETURN 'stg_gateway_log: merged ' || rows_merged || ' row(s), watermark was ' || wm;
 END;
 $$;
 
