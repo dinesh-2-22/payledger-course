@@ -92,6 +92,11 @@ waiting for the schedule, plus a `TASK_HISTORY()` query to watch runs.
 > data. Suspend the tree (commands at the bottom of the script) once you're done
 > exploring this module, so a trial account doesn't spend credits on empty runs.
 
+**Testing the DAG end-to-end:** `orchestration/dry_run_reset.sql` truncates every table
+the pipeline writes to, resets `etl_watermark` back to epoch, fires `task_pipeline_start`
+once, and gives you the `TASK_HISTORY()` + row-count queries to confirm a clean full run —
+handy for re-testing after any script change without waiting for the nightly schedule.
+
 ---
 
 ## ✅ Checkpoint
