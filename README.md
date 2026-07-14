@@ -43,9 +43,9 @@ dispute_memos ········(free text)···················�
 | # | Module | You'll learn | Status |
 |---|--------|--------------|--------|
 | 0 | [Orientation & Snowflake setup](module-00-setup/) | Trial account, roles/warehouses/db bootstrap | ⬜ planned |
-| 1 | [Snowflake foundations](module-01-snowflake-foundations/) | Warehouses, schemas, stages, time travel, cost | ⬜ planned |
+| 1 | [Snowflake foundations](module-01-snowflake-foundations/) | Warehouses, schemas, stages, time travel, cost | ✅ **built** |
 | 2 | [**Mock data, raw landing & dispute corpus**](module-02-mock-data-and-corpus/) | Faker generator, stages, `COPY INTO` | ✅ **built** |
-| 3 | [SQL-first pipeline](module-03-sql-first-pipeline/) | Watermark/delta-load, MERGE, staging→fact | ⬜ planned |
+| 3 | [SQL-first pipeline](module-03-sql-first-pipeline/) | Watermark/delta-load, MERGE, staging→fact | ✅ **built** |
 | 4 | [CI/CD for SQL pipelines](module-04-sql-cicd/) | GitHub Actions + schemachange, environments | ⬜ planned |
 | 5 | [dbt migration — day 1](module-05-dbt-day1/) | sources, staging models, tests, data quality | ⬜ planned |
 | 6 | [dbt migration — day 2](module-06-dbt-day2/) | intermediate, marts, `ref()`, docs/lineage | ⬜ planned |
@@ -69,16 +69,24 @@ Every module folder contains:
 - **`claude-code.md`** — two concrete ways Claude Code accelerates that module
 - a **checkpoint** — what must be working before you move on
 
-## Quickstart (Module 2 is ready now)
+## Quickstart (Modules 1–3 are ready now)
 
 ```bash
-# 1. Set up Snowflake objects (Module 1 — coming soon)
+# 1. Set up Snowflake objects: run module-01-snowflake-foundations/setup.sql
 # 2. Generate and inspect the mock data:
 cd module-02-mock-data-and-corpus
 pip install -r requirements.txt
 python generate_data.py
 # 3. Load it: run stage_and_copy.sql in SnowSQL / Snowsight
+# 4. Build the pipeline: run module-03-sql-first-pipeline's ddl/, etl/, then orchestration/
 ```
+
+> **Tired of copy-pasting each file into a Snowsight worksheet?**
+> `module-03-sql-first-pipeline/optional_snowflake_git_integration.sql` sets up a native
+> Snowflake Git Repository object against this GitHub repo, so you can `git push` +
+> `ALTER GIT REPOSITORY ... FETCH` + `EXECUTE IMMEDIATE FROM @repo/.../file.sql` (or just
+> browse the repo as a Snowsight Workspace) instead of copy-pasting — for every module,
+> not just Module 3.
 
 ---
 
