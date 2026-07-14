@@ -53,15 +53,15 @@ AS
 
 CREATE OR REPLACE TASK task_load_stg_transactions
     WAREHOUSE = PAYLEDGER_WH
-    AFTER task_pipeline_start
     COMMENT   = 'Incremental raw_transactions -> stg_transactions'
+    AFTER task_pipeline_start
 AS
     CALL sp_load_stg_transactions();
 
 CREATE OR REPLACE TASK task_load_stg_gateway_log
     WAREHOUSE = PAYLEDGER_WH
-    AFTER task_pipeline_start
     COMMENT   = 'Incremental raw_gateway_log -> stg_gateway_log'
+    AFTER task_pipeline_start
 AS
     CALL sp_load_stg_gateway_log();
 
