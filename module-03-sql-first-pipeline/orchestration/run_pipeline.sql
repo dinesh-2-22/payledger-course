@@ -52,19 +52,19 @@ AS
 -- ---------------------------------------------------------------------------
 CREATE OR REPLACE TASK task_load_int_transactions_enriched
     WAREHOUSE = PAYLEDGER_WH
-    AFTER     = task_load_stg_transactions
+    AFTER task_load_stg_transactions
 AS
     CALL sp_load_int_transactions_enriched();
 
 CREATE OR REPLACE TASK task_load_int_settlements
     WAREHOUSE = PAYLEDGER_WH
-    AFTER     = task_load_stg_gateway_log
+    AFTER task_load_stg_gateway_log
 AS
     CALL sp_load_int_settlements();
 
 CREATE OR REPLACE TASK task_load_int_fees
     WAREHOUSE = PAYLEDGER_WH
-    AFTER     = task_load_stg_gateway_log
+    AFTER task_load_stg_gateway_log
 AS
     CALL sp_load_int_fees();
 
@@ -73,7 +73,7 @@ AS
 -- ---------------------------------------------------------------------------
 CREATE OR REPLACE TASK task_load_fact_payment_ledger
     WAREHOUSE = PAYLEDGER_WH
-    AFTER     = task_load_int_transactions_enriched, task_load_int_settlements, task_load_int_fees
+    AFTER task_load_int_transactions_enriched, task_load_int_settlements, task_load_int_fees
 AS
     CALL sp_load_fact_payment_ledger();
 
