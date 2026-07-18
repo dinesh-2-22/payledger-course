@@ -1,0 +1,62 @@
+version: 2
+
+models:
+  - name: dim_merchant
+    description: "Conformed merchant dimension, built straight from raw_merchant_master."
+    columns:
+      - name: merchant_id
+        tests:
+          - unique
+          - not_null
+
+  - name: dim_card
+    description: "Conformed card dimension, built straight from raw_card_master."
+    columns:
+      - name: card_id
+        tests:
+          - unique
+          - not_null
+
+  - name: dim_mcc
+    description: "Distinct merchant category codes, sourced from the merchant master."
+    columns:
+      - name: mcc_code
+        tests:
+          - unique
+          - not_null
+
+  - name: dim_currency
+    description: "Distinct currency codes observed on transactions."
+    columns:
+      - name: currency_code
+        tests:
+          - unique
+          - not_null
+
+  - name: fact_payment_ledger
+    description: "Grain: one row per settled transaction."
+    columns:
+      - name: transaction_id
+        tests:
+          - unique
+          - not_null
+      - name: card_id
+        tests:
+          - relationships:
+              to: ref('dim_card')
+              field: card_id
+      - name: merchant_id
+        tests:
+          - relationships:
+              to: ref('dim_merchant')
+              field: merchant_id
+      - name: mcc_code
+        tests:
+          - relationships:
+              to: ref('dim_mcc')
+              field: mcc_code
+      - name: currency_code
+        tests:
+          - relationships:
+              to: ref('dim_currency')
+              field: currency_code
