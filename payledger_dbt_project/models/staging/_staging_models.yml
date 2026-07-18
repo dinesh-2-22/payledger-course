@@ -1,0 +1,18 @@
+version: 2
+
+models:
+  - name: stg_transactions
+    description: "Cleaned, renamed copy of raw_transactions."
+    columns:
+      - name: transaction_id
+        tests:
+          - unique
+          - not_null
+
+  - name: stg_gateway_log
+    description: "Cleaned, renamed copy of raw_gateway_log."
+    columns:
+      - name: gateway_log_id
+        tests:
+          - unique
+          - not_null

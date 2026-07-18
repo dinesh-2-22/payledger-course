@@ -1,0 +1,26 @@
+version: 2
+
+models:
+  - name: int_transactions_enriched
+    description: "stg_transactions enriched with card + merchant descriptive attributes."
+    columns:
+      - name: transaction_id
+        tests:
+          - unique
+          - not_null
+
+  - name: int_settlements
+    description: "One row per transaction that actually settled -- nets gateway retries."
+    columns:
+      - name: transaction_id
+        tests:
+          - unique
+          - not_null
+
+  - name: int_fees
+    description: "Interchange + scheme fee attribution, same derivation as int_settlements."
+    columns:
+      - name: transaction_id
+        tests:
+          - unique
+          - not_null

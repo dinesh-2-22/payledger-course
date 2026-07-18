@@ -1,0 +1,53 @@
+name: dbt CI - payledger_dbt_project
+
+on:
+  push:
+    paths:
+      - 'payledger_dbt_project/**'
+  pull_request:
+    paths:
+      - 'payledger_dbt_project/**'
+
+jobs:
+  dbt-build:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: payledger_dbt_project
+
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Install dbt-snowflake
+        run: pip install dbt-snowflake
+
+      - name: Write dbt profile from GitHub Secrets
+        run: |
+          mkdir -p ~/.dbt
+          cat > ~/.dbt/profiles.yml <<EOF
+          payledger_dbt_project:
+            target: ci
+            outputs:
+              ci:
+                type: snowflake
+                account: ${{ secrets.SNOWFLAKE_ACCOUNT }}
+                user: ${{ secrets.SNOWFLAKE_USER }}
+                role: ${{ secrets.SNOWFLAKE_ROLE }}
+                warehouse: ${{ secrets.SNOWFLAKE_WAREHOUSE }}
+                database: ${{ secrets.SNOWFLAKE_DATABASE }}
+                schema: ${{ secrets.SNOWFLAKE_SCHEMA }}
+                private_key: "${{ secrets.SNOWFLAKE_PRIVATE_KEY }}"
+                threads: 4
+          EOF
+
+      - name: dbt debug
+        run: dbt debug --target ci
+
+      - name: dbt build
+        run: dbt build --target ci
