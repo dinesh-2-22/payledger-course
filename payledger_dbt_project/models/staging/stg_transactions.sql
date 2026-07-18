@@ -1,3 +1,4 @@
+-- CI test trigger: harmless comment, no logic change
 select
     transaction_id,
     card_id,
