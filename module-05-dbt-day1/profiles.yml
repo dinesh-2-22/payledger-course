@@ -1,0 +1,6 @@
+payledger:
+  target: dev
+  outputs:
+    dev:
+      type: snowflake
+      threads: 4
