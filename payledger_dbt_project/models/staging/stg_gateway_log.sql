@@ -1,3 +1,4 @@
+-- CI test trigger #2: harmless comment, no logic change
 select
     gateway_log_id,
     transaction_id,
